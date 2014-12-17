@@ -1,5 +1,5 @@
 {
-  "name": "BRail2Stoptimes",
+  "name": "brail2stoptimes",
   "version": "0.0.1",
   "description": "Scrapes the Belgian Railway company's website for stoptimes",
   "main": "lib/BRail2StopTimesStream.js",
