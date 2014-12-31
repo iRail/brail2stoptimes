@@ -42,3 +42,14 @@ stoptimesstream.on("data", function (data) {
 ## What now?
 
 You can ingest this data in e.g., mongodb (check the bin directory) or start creating data dumps such as a GTFS dump. If you've done something, please let me know through the issue tracker.
+
+## How does it work?
+
+It works in two steps:
+ * It scrapes all stations for arrival and departure times over one day (starting at 3am clock round)
+ * It stores the train numbers and stores a link to the nextStopTime
+
+For each stoptime, we thus need 3 requests:
+ 1. To obtain the departures in a station
+ 2. To obtain the arrivals in a station and link them to the departures
+ 3. To obtain the nextStopTime
