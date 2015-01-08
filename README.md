@@ -33,12 +33,26 @@ var BRail2StopTimesStream = require("brail2stoptimes");
 //you can find these identifiers in our https://github.com/iRail/stations repository or check the bin/example.js file
 var stations = ["008718201","008718206","008500010","008832664"];
 var stoptimesstream = new BRail2StopTimesStream(stations, "en", new Date(), new Date() + 2); //get for 2 days
-stoptimesstream.on("data", function (data) {
+stoptimesstream.on("data", function (stoptime) {
   //do something with it:
-  console.log(data);
+  if (stoptime) {
+    console.log(stoptime);
+  }
 });
 ```
 
 ## What now?
 
 You can ingest this data in e.g., mongodb (check the bin directory) or start creating data dumps such as a GTFS dump. If you've done something, please let me know through the issue tracker.
+
+## How does it work?
+
+It works in two steps:
+ * It scrapes all stations for arrival and departure times
+ * It looks up the train numbers and fetches a link to the nextStopTime
+
+For each stoptime, we need max 4 requests:
+ 1. To obtain the departures in a station
+ 2. To obtain the arrivals in a station and link them to the departures
+ 3. To obtain the nextStopTime link (will be cached per train number)
+ 4. To obtain the nextStopTime data itself (will be cached per train number)

@@ -1,6 +1,6 @@
 {
   "name": "brail2stoptimes",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Scrapes the Belgian Railway company's website for stoptimes",
   "main": "lib/BRail2StopTimesStream.js",
   "author": "Pieter Colpaert",
@@ -8,6 +8,10 @@
   "dependencies": {
     "q": "~1.1.2",
     "xml-stream": "~0.4.5",
-    "mongodb": "~1.4.23"
+    "mongodb": "~1.4.23",
+    "redis": "~0.12.1",
+    "request": "~2.51.0",
+    "xml2js": "~0.4.4",
+    "rediscache": "~0.1.2"
   }
 }
