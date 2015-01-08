@@ -9,16 +9,20 @@ MongoClient.connect(url, function(err, db) {
   if (!err) {
     console.error("Connected correctly to server");
   }
-  var stoptimesstream = new BRail2StopTimesStream(allstations, "en");
+  var stoptimesstream = new BRail2StopTimesStream(allstations, "en", new Date(), new Date("tomorrow"));
+  var collection = db.collection('documents');
   stoptimesstream.on("data", function (data) {
-    var collection = db.collection('documents');
-    for(var i in data) {
-      data[i]["_id"] = data[i]["@id"];
-      delete data[i]["@id"];
+    if (data && data[0]["@id"]) {
+      for(var i in data) {
+        data[i]["_id"] = data[i]["@id"];
+        delete data[i]["@id"];
+      }
+      collection.insert(data, function(err, result) {
+        console.error("Inserted documents into the document collection", result);
+      });
+    } else {
+      console.log("no data received");
     }
-    collection.insert(data, function(err, result) {
-      console.error("Inserted documents into the document collection", result);
-    });
   });
   stoptimesstream.on("end", function () {
     db.close();
